@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anyhandy.DataProvider.EFCore\Anyhandy.DataProvider.EFCore.csproj" />
+    <ProjectReference Include="..\Anyhandy.Interface\Anyhandy.Interface.csproj" />
+  </ItemGroup>
+
+</Project>
