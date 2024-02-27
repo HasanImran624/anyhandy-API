@@ -35,10 +35,6 @@ namespace anyhandy_API.Controllers
             try
             {
                 _user.CreateUser(user);
-
-                // Process user signup (you can add your logic here)
-
-                // For demonstration purposes, returning a success message
                 return Ok(new { Message = "User signed up successfully!" });
             }
             catch(InvalidOperationException ex)
