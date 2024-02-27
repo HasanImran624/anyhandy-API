@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Areatype
+    public partial class AreaType
     {
-        public Areatype()
+        public AreaType()
         {
-            TblHomecleanings = new HashSet<TblHomecleaning>();
+            TblHomeCleanings = new HashSet<TblHomeCleaning>();
         }
 
         public int AreaTypeId { get; set; }
         public string AreaTypeName { get; set; }
 
-        public virtual ICollection<TblHomecleaning> TblHomecleanings { get; set; }
+        public virtual ICollection<TblHomeCleaning> TblHomeCleanings { get; set; }
     }
 }

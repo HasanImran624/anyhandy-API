@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblPaintingservice
+    public partial class TblPaintingService
     {
-        public TblPaintingservice()
+        public TblPaintingService()
         {
-            TblPaintingservicesattachments = new HashSet<TblPaintingservicesattachment>();
+            TblPaintingServicesAttachments = new HashSet<TblPaintingServicesAttachment>();
         }
 
         public int PaintingServiceId { get; set; }
@@ -24,7 +24,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public string SpecialRequest { get; set; }
 
         public virtual Job Job { get; set; }
-        public virtual Subservice1 SubCategory { get; set; }
-        public virtual ICollection<TblPaintingservicesattachment> TblPaintingservicesattachments { get; set; }
+        public virtual SubService SubCategory { get; set; }
+        public virtual ICollection<TblPaintingServicesAttachment> TblPaintingServicesAttachments { get; set; }
     }
 }

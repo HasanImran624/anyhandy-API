@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblHomecleaning
+    public partial class TblHomeCleaning
     {
-        public TblHomecleaning()
+        public TblHomeCleaning()
         {
-            TblHomecleaningattachments = new HashSet<TblHomecleaningattachment>();
+            TblHomeCleaningAttachments = new HashSet<TblHomeCleaningAttachment>();
         }
 
         public int HomeCleaningServiceId { get; set; }
@@ -25,11 +25,11 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? NumberItems { get; set; }
         public string SizeItems { get; set; }
 
-        public virtual Areatype AreaType { get; set; }
+        public virtual AreaType AreaType { get; set; }
         public virtual Job Job { get; set; }
-        public virtual Locationtype LocationType { get; set; }
-        public virtual Subservice1 SubService { get; set; }
-        public virtual Typefurniture TypeFurniture { get; set; }
-        public virtual ICollection<TblHomecleaningattachment> TblHomecleaningattachments { get; set; }
+        public virtual LocationType LocationType { get; set; }
+        public virtual SubService SubService { get; set; }
+        public virtual TypeFurniture TypeFurniture { get; set; }
+        public virtual ICollection<TblHomeCleaningAttachment> TblHomeCleaningAttachments { get; set; }
     }
 }

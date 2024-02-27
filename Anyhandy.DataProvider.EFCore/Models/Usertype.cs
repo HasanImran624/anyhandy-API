@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Usertype
+    public partial class UserType
     {
         public short UserTypeId { get; set; }
         public string UserTypeInfo { get; set; }

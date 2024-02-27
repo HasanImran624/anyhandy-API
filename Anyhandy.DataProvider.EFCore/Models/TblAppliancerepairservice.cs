@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblAppliancerepairservice
+    public partial class TblApplianceRepairService
     {
         public int ApplianceRepairServiceId { get; set; }
         public int? JobId { get; set; }
@@ -15,6 +15,6 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? NumberItems { get; set; }
 
         public virtual Job Job { get; set; }
-        public virtual Subservice1 SubService { get; set; }
+        public virtual SubService SubService { get; set; }
     }
 }

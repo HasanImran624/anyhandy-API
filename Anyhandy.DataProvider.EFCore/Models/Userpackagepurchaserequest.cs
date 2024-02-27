@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Userpackagepurchaserequest
+    public partial class UserPackagePurchaseRequest
     {
         public int PackageRequestId { get; set; }
         public int? PackageId { get; set; }
@@ -17,7 +17,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public DateTime? CreateDatetime { get; set; }
         public DateTime? UpdatedDatetime { get; set; }
 
-        public virtual Userpackage Package { get; set; }
+        public virtual UserPackage Package { get; set; }
         public virtual User User { get; set; }
     }
 }

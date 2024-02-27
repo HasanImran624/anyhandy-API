@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Jobproposal
+    public partial class JobProposal
     {
-        public Jobproposal()
+        public JobProposal()
         {
-            Jobcontracts = new HashSet<Jobcontract>();
-            Jobproposalattachments = new HashSet<Jobproposalattachment>();
+            JobContracts = new HashSet<JobContract>();
+            JobProposalAttachments = new HashSet<JobProposalAttachment>();
         }
 
         public int JobProposalId { get; set; }
@@ -24,7 +24,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
 
         public virtual Job Job { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Jobcontract> Jobcontracts { get; set; }
-        public virtual ICollection<Jobproposalattachment> Jobproposalattachments { get; set; }
+        public virtual ICollection<JobContract> JobContracts { get; set; }
+        public virtual ICollection<JobProposalAttachment> JobProposalAttachments { get; set; }
     }
 }

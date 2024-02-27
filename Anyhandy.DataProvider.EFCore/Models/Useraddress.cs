@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Useraddress
+    public partial class UserAddress
     {
-        public Useraddress()
+        public UserAddress()
         {
             Jobs = new HashSet<Job>();
         }

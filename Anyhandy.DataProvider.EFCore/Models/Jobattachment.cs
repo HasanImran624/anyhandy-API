@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Jobattachment
+    public partial class JobAttachment
     {
         public int AttachmentId { get; set; }
         public int? JobId { get; set; }

@@ -5,18 +5,18 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Locationtype
+    public partial class LocationType
     {
-        public Locationtype()
+        public LocationType()
         {
-            TblHomecleanings = new HashSet<TblHomecleaning>();
-            TblPestcontrolservices = new HashSet<TblPestcontrolservice>();
+            TblHomeCleanings = new HashSet<TblHomeCleaning>();
+            TblPestControlServices = new HashSet<TblPestControlService>();
         }
 
         public int LocationTypeId { get; set; }
         public string LocationTypeName { get; set; }
 
-        public virtual ICollection<TblHomecleaning> TblHomecleanings { get; set; }
-        public virtual ICollection<TblPestcontrolservice> TblPestcontrolservices { get; set; }
+        public virtual ICollection<TblHomeCleaning> TblHomeCleanings { get; set; }
+        public virtual ICollection<TblPestControlService> TblPestControlServices { get; set; }
     }
 }

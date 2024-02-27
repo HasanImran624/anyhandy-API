@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblLandscapingserviceattachment
+    public partial class TblLandscapingServiceAttachment
     {
         public int LandscapingServiceAttachmentId { get; set; }
         public int? LandscapingServiceId { get; set; }
         public string AttachmentPath { get; set; }
         public string Description { get; set; }
 
-        public virtual TblLandscapingservice LandscapingService { get; set; }
+        public virtual TblLandscapingService LandscapingService { get; set; }
     }
 }

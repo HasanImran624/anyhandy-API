@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Typefurniture
+    public partial class TypeFurniture
     {
-        public Typefurniture()
+        public TypeFurniture()
         {
-            TblHomecleanings = new HashSet<TblHomecleaning>();
+            TblHomeCleanings = new HashSet<TblHomeCleaning>();
         }
 
         public int TypeFurnitureId { get; set; }
         public string TypeFurnitureName { get; set; }
 
-        public virtual ICollection<TblHomecleaning> TblHomecleanings { get; set; }
+        public virtual ICollection<TblHomeCleaning> TblHomeCleanings { get; set; }
     }
 }

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblGeneralservice
+    public partial class TblGeneralService
     {
-        public TblGeneralservice()
+        public TblGeneralService()
         {
-            TblGeneralserviceattachments = new HashSet<TblGeneralserviceattachment>();
+            TblGeneralServiceAttachments = new HashSet<TblGeneralServiceAttachment>();
         }
 
         public int GeneralServiceId { get; set; }
@@ -17,6 +17,6 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public string MoreDetailsDescription { get; set; }
 
         public virtual Job Job { get; set; }
-        public virtual ICollection<TblGeneralserviceattachment> TblGeneralserviceattachments { get; set; }
+        public virtual ICollection<TblGeneralServiceAttachment> TblGeneralServiceAttachments { get; set; }
     }
 }

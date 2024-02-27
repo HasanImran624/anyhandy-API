@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Handymanserviceslocation
+    public partial class HandymanServicesLocation
     {
         public int ServiceLocationId { get; set; }
         public int? CityId { get; set; }

@@ -5,23 +5,16 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Mainservice1
+    public partial class MainService1
     {
-        public Mainservice1()
+        public MainService1()
         {
-            Jobs = new HashSet<Job>();
-            Subservice1s = new HashSet<Subservice1>();
-            Userpackages = new HashSet<Userpackage>();
-            Userprofileservices = new HashSet<Userprofileservice>();
+            SubService1s = new HashSet<SubService1>();
         }
 
-        public int MainServicesId { get; set; }
-        public string ServiceNameEn { get; set; }
-        public string ServiceNameAr { get; set; }
+        public int MainServiceId { get; set; }
+        public string MainServiceName { get; set; }
 
-        public virtual ICollection<Job> Jobs { get; set; }
-        public virtual ICollection<Subservice1> Subservice1s { get; set; }
-        public virtual ICollection<Userpackage> Userpackages { get; set; }
-        public virtual ICollection<Userprofileservice> Userprofileservices { get; set; }
+        public virtual ICollection<SubService1> SubService1s { get; set; }
     }
 }

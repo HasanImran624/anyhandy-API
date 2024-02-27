@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblHvacservicesattachment
+    public partial class TblHvacservicesAttachment
     {
         public int HvacServicesAttachmentsId { get; set; }
         public int? HvacServiceId { get; set; }
         public string FilePath { get; set; }
 
-        public virtual TblHvacservice HvacService { get; set; }
+        public virtual TblHvacService HvacService { get; set; }
     }
 }

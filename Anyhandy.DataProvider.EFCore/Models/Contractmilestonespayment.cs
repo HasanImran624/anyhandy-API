@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Contractmilestonespayment
+    public partial class ContractMilestonesPayment
     {
         public int ContractMilestonesPaymentId { get; set; }
         public int? MilestoneId { get; set; }
         public string PaymentReference { get; set; }
         public decimal Amount { get; set; }
 
-        public virtual Contractmilestone Milestone { get; set; }
+        public virtual ContractMilestone Milestone { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class TblPestcontrolservice
+    public partial class TblPestControlService
     {
         public int PestControlServiceId { get; set; }
         public int? JobId { get; set; }
@@ -17,8 +17,8 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? RoomTypeId { get; set; }
 
         public virtual Job Job { get; set; }
-        public virtual Locationtype LocationType { get; set; }
-        public virtual Roomtype RoomType { get; set; }
-        public virtual Subservice1 SubService { get; set; }
+        public virtual LocationType LocationType { get; set; }
+        public virtual RoomType RoomType { get; set; }
+        public virtual SubService SubService { get; set; }
     }
 }

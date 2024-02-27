@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Userpackage
+    public partial class UserPackage
     {
-        public Userpackage()
+        public UserPackage()
         {
-            Userpackagepurchaserequests = new HashSet<Userpackagepurchaserequest>();
+            UserPackagePurchaseRequests = new HashSet<UserPackagePurchaseRequest>();
         }
 
         public int PackageId { get; set; }
@@ -23,8 +23,8 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public byte? AutoPurchase { get; set; }
 
         public virtual User HandymanUser { get; set; }
-        public virtual Mainservice1 MainCategory { get; set; }
-        public virtual Subservice1 SubCategory { get; set; }
-        public virtual ICollection<Userpackagepurchaserequest> Userpackagepurchaserequests { get; set; }
+        public virtual MainService MainCategory { get; set; }
+        public virtual SubService SubCategory { get; set; }
+        public virtual ICollection<UserPackagePurchaseRequest> UserPackagePurchaseRequests { get; set; }
     }
 }

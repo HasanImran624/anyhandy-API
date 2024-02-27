@@ -9,7 +9,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
     {
         public Message()
         {
-            Messageattachments = new HashSet<Messageattachment>();
+            MessageAttachments = new HashSet<MessageAttachment>();
         }
 
         public int MessageId { get; set; }
@@ -19,6 +19,6 @@ namespace Anyhandy.DataProvider.EFCore.Models
 
         public virtual User Receiver { get; set; }
         public virtual User Sender { get; set; }
-        public virtual ICollection<Messageattachment> Messageattachments { get; set; }
+        public virtual ICollection<MessageAttachment> MessageAttachments { get; set; }
     }
 }

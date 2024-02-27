@@ -9,20 +9,20 @@ namespace Anyhandy.DataProvider.EFCore.Models
     {
         public Job()
         {
-            Jobattachments = new HashSet<Jobattachment>();
-            Jobcontracts = new HashSet<Jobcontract>();
-            Jobproposals = new HashSet<Jobproposal>();
-            Jobservices = new HashSet<Jobservice>();
-            TblAppliancerepairservices = new HashSet<TblAppliancerepairservice>();
-            TblCarpentryservices = new HashSet<TblCarpentryservice>();
-            TblElectricalservices = new HashSet<TblElectricalservice>();
-            TblGeneralservices = new HashSet<TblGeneralservice>();
-            TblHomecleanings = new HashSet<TblHomecleaning>();
-            TblHvacservices = new HashSet<TblHvacservice>();
-            TblLandscapingservices = new HashSet<TblLandscapingservice>();
-            TblPaintingservices = new HashSet<TblPaintingservice>();
-            TblPestcontrolservices = new HashSet<TblPestcontrolservice>();
-            TblPlumbingservices = new HashSet<TblPlumbingservice>();
+            JobAttachments = new HashSet<JobAttachment>();
+            JobContracts = new HashSet<JobContract>();
+            JobProposals = new HashSet<JobProposal>();
+            JobServices = new HashSet<JobService>();
+            TblApplianceRepairServices = new HashSet<TblApplianceRepairService>();
+            TblCarpentryServices = new HashSet<TblCarpentryService>();
+            TblElectricalServices = new HashSet<TblElectricalService>();
+            TblGeneralServices = new HashSet<TblGeneralService>();
+            TblHomeCleanings = new HashSet<TblHomeCleaning>();
+            TblHvacServices = new HashSet<TblHvacService>();
+            TblLandscapingServices = new HashSet<TblLandscapingService>();
+            TblPaintingServices = new HashSet<TblPaintingService>();
+            TblPestControlServices = new HashSet<TblPestControlService>();
+            TblPlumbingServices = new HashSet<TblPlumbingService>();
         }
 
         public int JobId { get; set; }
@@ -38,22 +38,22 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public DateTime? JobDue { get; set; }
         public DateTime? JobExpectedEnd { get; set; }
 
-        public virtual Useraddress JobAddress { get; set; }
-        public virtual Mainservice1 MainServices { get; set; }
+        public virtual UserAddress JobAddress { get; set; }
+        public virtual MainService MainServices { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Jobattachment> Jobattachments { get; set; }
-        public virtual ICollection<Jobcontract> Jobcontracts { get; set; }
-        public virtual ICollection<Jobproposal> Jobproposals { get; set; }
-        public virtual ICollection<Jobservice> Jobservices { get; set; }
-        public virtual ICollection<TblAppliancerepairservice> TblAppliancerepairservices { get; set; }
-        public virtual ICollection<TblCarpentryservice> TblCarpentryservices { get; set; }
-        public virtual ICollection<TblElectricalservice> TblElectricalservices { get; set; }
-        public virtual ICollection<TblGeneralservice> TblGeneralservices { get; set; }
-        public virtual ICollection<TblHomecleaning> TblHomecleanings { get; set; }
-        public virtual ICollection<TblHvacservice> TblHvacservices { get; set; }
-        public virtual ICollection<TblLandscapingservice> TblLandscapingservices { get; set; }
-        public virtual ICollection<TblPaintingservice> TblPaintingservices { get; set; }
-        public virtual ICollection<TblPestcontrolservice> TblPestcontrolservices { get; set; }
-        public virtual ICollection<TblPlumbingservice> TblPlumbingservices { get; set; }
+        public virtual ICollection<JobAttachment> JobAttachments { get; set; }
+        public virtual ICollection<JobContract> JobContracts { get; set; }
+        public virtual ICollection<JobProposal> JobProposals { get; set; }
+        public virtual ICollection<JobService> JobServices { get; set; }
+        public virtual ICollection<TblApplianceRepairService> TblApplianceRepairServices { get; set; }
+        public virtual ICollection<TblCarpentryService> TblCarpentryServices { get; set; }
+        public virtual ICollection<TblElectricalService> TblElectricalServices { get; set; }
+        public virtual ICollection<TblGeneralService> TblGeneralServices { get; set; }
+        public virtual ICollection<TblHomeCleaning> TblHomeCleanings { get; set; }
+        public virtual ICollection<TblHvacService> TblHvacServices { get; set; }
+        public virtual ICollection<TblLandscapingService> TblLandscapingServices { get; set; }
+        public virtual ICollection<TblPaintingService> TblPaintingServices { get; set; }
+        public virtual ICollection<TblPestControlService> TblPestControlServices { get; set; }
+        public virtual ICollection<TblPlumbingService> TblPlumbingServices { get; set; }
     }
 }

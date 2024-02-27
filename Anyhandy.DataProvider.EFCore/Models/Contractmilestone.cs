@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Anyhandy.DataProvider.EFCore.Models
 {
-    public partial class Contractmilestone
+    public partial class ContractMilestone
     {
-        public Contractmilestone()
+        public ContractMilestone()
         {
-            Contractmilestonespayments = new HashSet<Contractmilestonespayment>();
+            ContractMilestonesPayments = new HashSet<ContractMilestonesPayment>();
         }
 
         public int MilestoneId { get; set; }
@@ -20,7 +20,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public string Details { get; set; }
         public int? Status { get; set; }
 
-        public virtual Jobcontract JobContract { get; set; }
-        public virtual ICollection<Contractmilestonespayment> Contractmilestonespayments { get; set; }
+        public virtual JobContract JobContract { get; set; }
+        public virtual ICollection<ContractMilestonesPayment> ContractMilestonesPayments { get; set; }
     }
 }

@@ -9,16 +9,16 @@ namespace Anyhandy.DataProvider.EFCore.Models
     {
         public User()
         {
-            Handymanserviceslocations = new HashSet<Handymanserviceslocation>();
-            Jobcontracts = new HashSet<Jobcontract>();
-            Jobproposals = new HashSet<Jobproposal>();
+            HandymanServicesLocations = new HashSet<HandymanServicesLocation>();
+            JobContracts = new HashSet<JobContract>();
+            JobProposals = new HashSet<JobProposal>();
             Jobs = new HashSet<Job>();
             MessageReceivers = new HashSet<Message>();
             MessageSenders = new HashSet<Message>();
-            Useraddresses = new HashSet<Useraddress>();
-            Userpackagepurchaserequests = new HashSet<Userpackagepurchaserequest>();
-            Userpackages = new HashSet<Userpackage>();
-            Userprofileservices = new HashSet<Userprofileservice>();
+            UserAddresses = new HashSet<UserAddress>();
+            UserPackagePurchaseRequests = new HashSet<UserPackagePurchaseRequest>();
+            UserPackages = new HashSet<UserPackage>();
+            UserProfileServices = new HashSet<UserProfileService>();
         }
 
         public int UserId { get; set; }
@@ -33,15 +33,15 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public bool? IsHandyman { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<Handymanserviceslocation> Handymanserviceslocations { get; set; }
-        public virtual ICollection<Jobcontract> Jobcontracts { get; set; }
-        public virtual ICollection<Jobproposal> Jobproposals { get; set; }
+        public virtual ICollection<HandymanServicesLocation> HandymanServicesLocations { get; set; }
+        public virtual ICollection<JobContract> JobContracts { get; set; }
+        public virtual ICollection<JobProposal> JobProposals { get; set; }
         public virtual ICollection<Job> Jobs { get; set; }
         public virtual ICollection<Message> MessageReceivers { get; set; }
         public virtual ICollection<Message> MessageSenders { get; set; }
-        public virtual ICollection<Useraddress> Useraddresses { get; set; }
-        public virtual ICollection<Userpackagepurchaserequest> Userpackagepurchaserequests { get; set; }
-        public virtual ICollection<Userpackage> Userpackages { get; set; }
-        public virtual ICollection<Userprofileservice> Userprofileservices { get; set; }
+        public virtual ICollection<UserAddress> UserAddresses { get; set; }
+        public virtual ICollection<UserPackagePurchaseRequest> UserPackagePurchaseRequests { get; set; }
+        public virtual ICollection<UserPackage> UserPackages { get; set; }
+        public virtual ICollection<UserProfileService> UserProfileServices { get; set; }
     }
 }
