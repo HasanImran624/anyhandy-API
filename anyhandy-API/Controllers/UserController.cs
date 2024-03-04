@@ -43,6 +43,12 @@ namespace anyhandy_API.Controllers
             }
         }
 
+        [HttpGet("healthcheck")]
+        public IActionResult HealthCheck()
+        {
+            return Ok("Server is healthy!");
+        }
+
 
         [HttpPost("validate-login")]
         public IActionResult ValidateLogin([FromBody] UserDTO user)
