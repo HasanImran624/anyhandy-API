@@ -2,6 +2,7 @@
 using Anyhandy.DataProvider.EFCore.Models;
 using Anyhandy.Interface.User;
 using Anyhandy.Models.DTOs;
+using Anyhandy.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace Anyhandy.Services.Users
             }
         }
 
-        public bool ValidateUserCredentials(UserDTO userDTO)
+        public LoginDetailsVM ValidateUserCredentials(UserDTO userDTO)
         {
             using var userContext = new AnyHandyDBContext<User>(); // Assuming your context is non-generic
             bool isValidCredentials = false;
@@ -64,7 +65,7 @@ namespace Anyhandy.Services.Users
             {
                 if(userDTO.IsHandyman)
                 {
-
+                    
                      isValidCredentials = (userEntity.Paswword == userDTO.Password && (bool)userEntity.IsHandyman);
                 }
                 else
@@ -74,11 +75,11 @@ namespace Anyhandy.Services.Users
                 // Compare the stored password with the provided password
                 
 
-                return isValidCredentials;
+                return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName};
             }
 
             // If no user with the provided email is found
-            return false;
+            return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = string.Empty }; ;
         }
 
 

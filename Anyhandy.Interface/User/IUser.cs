@@ -1,4 +1,5 @@
 ﻿using Anyhandy.Models.DTOs;
+using Anyhandy.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Anyhandy.Interface.User
     public interface IUser
     {
         void CreateUser(UserDTO userDTO);
-        bool ValidateUserCredentials(UserDTO userDTO);
+        LoginDetailsVM ValidateUserCredentials(UserDTO userDTO);
     }
 }

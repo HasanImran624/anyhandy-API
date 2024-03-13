@@ -17,6 +17,8 @@ namespace Anyhandy.DataProvider.EFCore.Models
             MessageSenders = new HashSet<Message>();
             UserAddresses = new HashSet<UserAddress>();
             UserPackagePurchaseRequests = new HashSet<UserPackagePurchaseRequest>();
+            UserProfileRatingRatedByUsers = new HashSet<UserProfileRating>();
+            UserProfileRatingUsers = new HashSet<UserProfileRating>();
             UserPackages = new HashSet<UserPackage>();
             UserProfileServices = new HashSet<UserProfileService>();
         }
@@ -40,6 +42,8 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public virtual ICollection<Message> MessageReceivers { get; set; }
         public virtual ICollection<Message> MessageSenders { get; set; }
         public virtual ICollection<UserAddress> UserAddresses { get; set; }
+        public virtual ICollection<UserProfileRating> UserProfileRatingRatedByUsers { get; set; }
+        public virtual ICollection<UserProfileRating> UserProfileRatingUsers { get; set; }
         public virtual ICollection<UserPackagePurchaseRequest> UserPackagePurchaseRequests { get; set; }
         public virtual ICollection<UserPackage> UserPackages { get; set; }
         public virtual ICollection<UserProfileService> UserProfileServices { get; set; }

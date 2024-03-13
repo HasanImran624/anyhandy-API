@@ -57,6 +57,7 @@ namespace Anyhandy.DataProvider.EFCore.Context
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<UserPackage> UserPackages { get; set; }
+        public virtual DbSet<UserProfileRating> UserProfileRatings { get; set; }
         public virtual DbSet<UserPackagePurchaseRequest> UserPackagePurchaseRequests { get; set; }
         public virtual DbSet<UserProfileService> UserProfileServices { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
@@ -1090,6 +1091,41 @@ namespace Anyhandy.DataProvider.EFCore.Context
                     .HasForeignKey(d => d.SubCategoryId)
                     .HasConstraintName("UserPackage_ibfk_3");
             });
+
+
+            modelBuilder.Entity<UserProfileRating>(entity =>
+            {
+                entity.HasKey(e => e.RatingId)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.RatedByUserId, "fk_rated_by_user");
+
+                entity.HasIndex(e => e.UserId, "fk_user");
+
+                entity.Property(e => e.RatingId).HasColumnName("rating_id");
+
+                entity.Property(e => e.RatedByUserId).HasColumnName("rated_by_user_id");
+
+                entity.Property(e => e.Rating).HasColumnName("rating");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.RatedByUser)
+                    .WithMany(p => p.UserProfileRatingRatedByUsers)
+                    .HasForeignKey(d => d.RatedByUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_rated_by_user");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserProfileRatingUsers)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user");
+            });
+
+
+
+
 
             modelBuilder.Entity<UserPackagePurchaseRequest>(entity =>
             {

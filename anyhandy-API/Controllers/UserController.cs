@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Anyhandy.Common;
+using Anyhandy.Models.ViewModels;
 
 namespace anyhandy_API.Controllers
 {
@@ -60,13 +61,13 @@ namespace anyhandy_API.Controllers
             }
 
             // Validate user credentials (add your authentication logic here)
-            bool isValidUser = _user.ValidateUserCredentials(user);
+            LoginDetailsVM loginDetailsVM = _user.ValidateUserCredentials(user);
 
-            if (isValidUser)
+            if (loginDetailsVM.IsValidUser)
             {
                 // Successful login
                 var tokenString = GenerateJSONWebToken(user);
-                return Ok(new { Message = "Login successful!" , token = tokenString});
+                return Ok(new { Message = "Login successful!" , token = tokenString, username = loginDetailsVM.UserName});
             }
             else
             {

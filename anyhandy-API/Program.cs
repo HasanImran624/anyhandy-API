@@ -1,4 +1,5 @@
 using Anyhandy.Common;
+using Anyhandy.Interface.Packages;
 using Anyhandy.Interface.User;
 using Anyhandy.Services.Users;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IPackage, PackagesService>();
 builder.Services.AddAuthentication("Bearer")
    .AddJwtBearer(options =>
    {
@@ -50,5 +52,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors("AllowOrigin");
+app.UseCors("AllowAnyOrigin");
 app.Run();
