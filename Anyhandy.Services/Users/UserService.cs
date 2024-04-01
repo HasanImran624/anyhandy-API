@@ -19,6 +19,17 @@ namespace Anyhandy.Services.Users
 
             try
             {
+                var lst = userContext.Jobs.ToList();
+
+                var lstt = (from j in userContext.Jobs
+                            join m in userContext.MainServices on j.MainServicesId equals m.MainServicesId
+                           
+                            select new UserDTO
+                            {
+                                Email = j.JobTitle
+                            }
+
+                            ).ToList();
                 // Check if a user with the provided email already exists
                 if (userContext.Users.Any(u => u.Email == userDTO.Email))
                 {
@@ -75,7 +86,7 @@ namespace Anyhandy.Services.Users
                 // Compare the stored password with the provided password
                 
 
-                return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName};
+                return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName, UserId = userEntity.UserId};
             }
 
             // If no user with the provided email is found

@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Anyhandy.Common;
 using Anyhandy.Models.ViewModels;
+using Anyhandy.DataProvider.EFCore.Models;
 
 namespace anyhandy_API.Controllers
 {
@@ -38,7 +39,7 @@ namespace anyhandy_API.Controllers
                 _user.CreateUser(user);
                 return Ok(new { Message = "User signed up successfully!" });
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 return BadRequest(new { Message = ex.Message });
             }
@@ -54,6 +55,7 @@ namespace anyhandy_API.Controllers
         [HttpPost("validate-login")]
         public IActionResult ValidateLogin([FromBody] UserDTO user)
         {
+            
             // Validate user input
             if (!ModelState.IsValid)
             {
@@ -66,8 +68,8 @@ namespace anyhandy_API.Controllers
             if (loginDetailsVM.IsValidUser)
             {
                 // Successful login
-                var tokenString = GenerateJSONWebToken(user);
-                return Ok(new { Message = "Login successful!" , token = tokenString, username = loginDetailsVM.UserName});
+                var tokenString = GenerateJSONWebToken(user, loginDetailsVM.UserId);
+                return Ok(new { Message = "Login successful!", token = tokenString, username = loginDetailsVM.UserName, UserId = loginDetailsVM.UserId });
             }
             else
             {
@@ -76,7 +78,7 @@ namespace anyhandy_API.Controllers
             }
         }
 
-        private string GenerateJSONWebToken(UserDTO user)
+        private string GenerateJSONWebToken(UserDTO user, int UserId)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfigrationManager.AppSettings["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -84,6 +86,7 @@ namespace anyhandy_API.Controllers
             var claims = new[] {
         new Claim(JwtRegisteredClaimNames.Sub, user.FullName),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
+         new Claim("UserId", UserId.ToString()),
         //new Claim("DateOfJoing", userInfo.DateOfJoing.ToString("yyyy-MM-dd")),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };

@@ -1,6 +1,8 @@
 using Anyhandy.Common;
+using Anyhandy.Interface.Dashboard;
 using Anyhandy.Interface.Packages;
 using Anyhandy.Interface.User;
+using Anyhandy.Services.Dashboard;
 using Anyhandy.Services.Users;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -14,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IDashboard, DashboardServices>();
 builder.Services.AddScoped<IPackage, PackagesService>();
 builder.Services.AddAuthentication("Bearer")
    .AddJwtBearer(options =>
