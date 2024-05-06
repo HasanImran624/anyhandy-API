@@ -16,5 +16,6 @@ namespace Anyhandy.Models.ResourcesModels
         public DateTime DueDate { get; set; }
         public string Service { get; set; }
         public int Status { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

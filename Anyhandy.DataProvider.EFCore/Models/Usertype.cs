@@ -9,5 +9,6 @@ namespace Anyhandy.DataProvider.EFCore.Models
     {
         public short UserTypeId { get; set; }
         public string UserTypeInfo { get; set; }
+        public int? UserId { get; set; }
     }
 }

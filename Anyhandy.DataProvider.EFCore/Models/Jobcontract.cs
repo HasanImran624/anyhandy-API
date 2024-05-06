@@ -16,9 +16,11 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? JobId { get; set; }
         public int? SelectedHandyManId { get; set; }
         public int? JobProposalId { get; set; }
+        public decimal? Amount { get; set; }
         public DateTime? ContractStart { get; set; }
         public DateTime? ContractEnd { get; set; }
-
+        public short? Status { get; set; }
+        public bool? IsMileStone { get; set; }
         public virtual Job Job { get; set; }
         public virtual JobProposal JobProposal { get; set; }
         public virtual User SelectedHandyMan { get; set; }

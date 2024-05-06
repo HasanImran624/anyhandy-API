@@ -86,7 +86,7 @@ namespace Anyhandy.Services.Users
                 // Compare the stored password with the provided password
                 
 
-                return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName, UserId = userEntity.UserId};
+                return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName, UserId = userEntity.UserId, FirstName = userEntity.FirstName, LastName = userEntity.LastName };
             }
 
             // If no user with the provided email is found

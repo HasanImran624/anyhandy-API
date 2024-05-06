@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Anyhandy.Models.ViewModels
+namespace Anyhandy.Models.DTOs
 {
-    public class LoginDetailsVM
+    public class TestClass
     {
-        public bool IsValidUser { get; set; }
-        public string UserName { get; set; }
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
+    }
+
+
+    public class TestClass2
+    {
+        public int Id { get; set; }
         public string LastName { get; set; }
     }
 }

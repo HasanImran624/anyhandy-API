@@ -11,7 +11,7 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? MilestoneId { get; set; }
         public string PaymentReference { get; set; }
         public decimal Amount { get; set; }
-
+        public decimal? BonusAmount { get; set; }
         public virtual ContractMilestone Milestone { get; set; }
     }
 }

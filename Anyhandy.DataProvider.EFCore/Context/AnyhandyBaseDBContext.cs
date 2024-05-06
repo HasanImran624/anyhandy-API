@@ -24,6 +24,7 @@ namespace Anyhandy.DataProvider.EFCore.Context
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<JobAttachment> JobAttachments { get; set; }
         public virtual DbSet<JobContract> JobContracts { get; set; }
+        public virtual DbSet<JobContractPayment> JobContractPayments { get; set; }
         public virtual DbSet<JobProposal> JobProposals { get; set; }
         public virtual DbSet<JobProposalAttachment> JobProposalAttachments { get; set; }
         public virtual DbSet<JobService> JobServices { get; set; }
@@ -88,6 +89,8 @@ namespace Anyhandy.DataProvider.EFCore.Context
 
                 entity.HasIndex(e => e.JobContractId, "JobContractID");
 
+                entity.Property(e => e.Amount).HasColumnType("decimal(10,2)");
+
                 entity.Property(e => e.MilestoneId).HasColumnName("MilestoneID");
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(10,2)");
@@ -109,6 +112,7 @@ namespace Anyhandy.DataProvider.EFCore.Context
                 entity.Property(e => e.ContractMilestonesPaymentId).HasColumnName("ContractMilestonesPaymentID");
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(10,2)");
+                entity.Property(e => e.BonusAmount).HasColumnType("decimal(10,2)");
 
                 entity.Property(e => e.MilestoneId).HasColumnName("MilestoneID");
 
@@ -240,6 +244,15 @@ namespace Anyhandy.DataProvider.EFCore.Context
                     .WithMany(p => p.JobContracts)
                     .HasForeignKey(d => d.SelectedHandyManId)
                     .HasConstraintName("JobContract_ibfk_2");
+            });
+
+            modelBuilder.Entity<JobContractPayment>(entity =>
+            {
+                entity.ToTable("JobContractPayment");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10,2)");
+
+                entity.Property(e => e.BonusAmount).HasColumnType("decimal(10,2)");
             });
 
             modelBuilder.Entity<JobProposal>(entity =>

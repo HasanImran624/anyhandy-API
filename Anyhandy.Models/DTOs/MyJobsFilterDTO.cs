@@ -18,6 +18,7 @@ namespace Anyhandy.Models.DTOs
         public int Status { get; set; }
         public int? TotalHired { get; set; }
         public int? TotalPropsals { get; set; }
+        public decimal? Amount { get; set; }
 
         //public int TotalPages { get; set; }
     }

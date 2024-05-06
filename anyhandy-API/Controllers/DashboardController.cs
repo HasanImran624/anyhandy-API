@@ -27,7 +27,8 @@ namespace anyhandy_API.Controllers
             try
             {
                 List<MyRecentJobsDTO> data = _dashboard.GetMyJobsDetailsWithUserID(UserID);
-                return Ok(new { Message = "success", Data = data });
+                List<MyHeroJobsDTO> lst = _dashboard.GetMyHeroListWithUserID(UserID);
+                return Ok(new { Message = "success", Data = data, HeroList = lst });
             }
             catch (InvalidOperationException ex)
             {
@@ -45,7 +46,7 @@ namespace anyhandy_API.Controllers
                 List<MyJobsFilterDTO> data = _dashboard.GetMyJobsFilterWithUserID(UserID);
                 int recordsPerPage = PerPage; // Number of records per page
 
-                if(data.Count > 0)
+                if (data.Count > 0)
                 {
                     int totalRecords = data.Count;
                     totalPages = totalRecords / recordsPerPage;
@@ -55,7 +56,7 @@ namespace anyhandy_API.Controllers
                         totalPages++;
                     }
                 }
-                
+
 
                 return Ok(new { Message = "success", Data = data, TotalPages = totalPages, TotalRecord = data.Count });
             }
@@ -88,6 +89,127 @@ namespace anyhandy_API.Controllers
                 }
 
                 return Ok(new { Message = "success", Data = data, TotalPages = totalPages, TotalRecord = data.Results.Count });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPropasalsReceviedSearchFilterWithSortBy")]
+        public IActionResult GetPropasalsReceviedSearchFilterWithSortBy(int UserID, int PageNo, string SearchTxt, string OrderByType, string SortByColumn, int RecordsPerPage, string ActiveType)
+        {
+            try
+            {
+                int totalPages = 0;
+                int recordsPerPage = 10;
+
+                FilteredResponse<List<ProposalsReceivedFilterDTO>> data = _dashboard.GetProposalsReceivedWithSortBy(SearchTxt, OrderByType, UserID, PageNo, SortByColumn, RecordsPerPage, ActiveType);
+
+                if (data.Results.Count > 0)
+                {
+                    int totalRecords = data.Results.Count;
+                    totalPages = totalRecords / recordsPerPage;
+
+                    if (totalRecords % recordsPerPage != 0)
+                    {
+                        totalPages++;
+                    }
+                }
+
+                return Ok(new { Message = "success", Data = data, TotalPages = totalPages, TotalRecord = data.TotalCount });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpGet("GetAllJobsStatusWithUserID")]
+        public IActionResult GetAllJobsStatusWithUserID(int UserID = 39)
+        {
+            try
+            {
+                JobsStatusCount data = _dashboard.GetAllJobsStatusWithUserID(UserID);
+                return Ok(new { Message = "success", Data = data });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPut("DeleteCancelJob")]
+        public IActionResult DeleteCancelJob(int jobId, int status)
+        {
+            try
+            {
+                var resp = _dashboard.DeleteCancelJob(jobId, status);
+                return Ok(new { Message = resp, IsSuccess = resp == "success" ? true : false });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdateProposalStatus")]
+        public IActionResult UpdateProposalStatus(int proposalId, string status)
+        {
+            try
+            {
+                var resp = _dashboard.UpdateProposalStatus(proposalId, status);
+                return Ok(new { Message = resp, IsSuccess = resp == "success" ? true : false });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+
+
+        [HttpGet("GetContractSearchFilterWithSortBy")]
+        public IActionResult GetContractSearchFilterWithSortBy(int UserID, int PageNo, string SearchTxt, string OrderByType, string SortByColumn, int RecordsPerPage, int ActiveType)
+        {
+            try
+            {
+                int totalPages = 0;
+                int recordsPerPage = 10;
+
+                var data = _dashboard.GetContractSearchFilterWithSortBy(SearchTxt, OrderByType, UserID, PageNo, SortByColumn, RecordsPerPage, ActiveType);
+
+                if (data.Results.Count > 0)
+                {
+                    int totalRecords = data.Results.Count;
+                    totalPages = totalRecords / recordsPerPage;
+
+                    if (totalRecords % recordsPerPage != 0)
+                    {
+                        totalPages++;
+                    }
+                }
+
+                return Ok(new { Message = "success", Data = data, TotalPages = totalPages, TotalRecord = data.TotalCount });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+
+        [HttpGet("JobContractDetails")]
+        public IActionResult JobContractDetails(int contractId)
+        {
+            try
+            {
+                int totalPages = 0;
+                int recordsPerPage = 10;
+
+                var data = _dashboard.JobContractDetails(contractId);
+
+                return Ok(new { Message = "success", Data = data });
             }
             catch (InvalidOperationException ex)
             {

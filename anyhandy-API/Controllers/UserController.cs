@@ -69,7 +69,7 @@ namespace anyhandy_API.Controllers
             {
                 // Successful login
                 var tokenString = GenerateJSONWebToken(user, loginDetailsVM.UserId);
-                return Ok(new { Message = "Login successful!", token = tokenString, username = loginDetailsVM.UserName, UserId = loginDetailsVM.UserId });
+                return Ok(new { Message = "Login successful!", token = tokenString, username = loginDetailsVM.UserName, UserId = loginDetailsVM.UserId, firstNmae = loginDetailsVM.FirstName, lastName = loginDetailsVM.LastName });
             }
             else
             {
