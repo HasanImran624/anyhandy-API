@@ -778,6 +778,70 @@ namespace Anyhandy.Services.Dashboard
                     lst.Add(obj);
                 }
             }
+            else if (mainServiceId == 2)
+            {
+                List<TblElectricalService> lstElectricalService = userContext.TblElectricalServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstElectricalService)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = userContext.SubServices.Where(x => x.SubServicesId == service.SubCategoryId).FirstOrDefault()?.ServiceNameEn;
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblElectricalService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
+            else if (mainServiceId == 3)
+            {
+                List<TblPaintingService> lstPaintingServic = userContext.TblPaintingServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstPaintingServic)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = userContext.SubServices.Where(x => x.SubServicesId == service.SubCategoryId).FirstOrDefault()?.ServiceNameEn;
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblPaintingService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
+            else if (mainServiceId == 4)
+            {
+                List<TblLandscapingService> lstLandscapingService = userContext.TblLandscapingServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstLandscapingService)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = userContext.SubServices.Where(x => x.SubServicesId == service.SubServicesId).FirstOrDefault()?.ServiceNameEn;
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblLandscapingService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
+            else if (mainServiceId == 5)
+            {
+                List<TblPestControlService> lstPestControlService = userContext.TblPestControlServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstPestControlService)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = userContext.SubServices.Where(x => x.SubServicesId == service.SubServiceId).FirstOrDefault()?.ServiceNameEn;
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblPestControlService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
 
 
             return lst;
@@ -788,7 +852,7 @@ namespace Anyhandy.Services.Dashboard
         private List<Item> GetProperties<T>(T myObject, AnyHandyDBContext<User> context)
         {
             List<Item> items = new List<Item>();
-            string[] arrExcludeColumns = new string[] { "JobId", "SubServiceId", "SubCategoryId", "CarpentryServiceId", "PlumbingServiceId", "HomeCleaningServiceId", "HvacServiceId" };
+            string[] arrExcludeColumns = new string[] { "JobId", "SubServiceId", "SubCategoryId", "CarpentryServiceId", "PlumbingServiceId", "HomeCleaningServiceId", "HvacServiceId", "ElectricalServiceId", "PaintingServiceId", "LandscapingServiceId", "PestControlServiceId", "SubServicesId" };
             Type myType = myObject.GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
 
@@ -798,7 +862,7 @@ namespace Anyhandy.Services.Dashboard
                 bool isVirtual = typeof(T).GetProperty(propertyName).GetGetMethod().IsVirtual;
                 if (!arrExcludeColumns.Contains(propertyName) && !isVirtual)
                 {
-                    if (propertyName == "LcoationTypeId")
+                    if (propertyName == "LocationTypeId")
                     {
                         object value = null;
                         try
@@ -840,6 +904,34 @@ namespace Anyhandy.Services.Dashboard
 
                         items.Add(new Item() { Key = "TypeFurnitureName", Value = value });
                     }
+                    else if (propertyName == "RoomTypeId")
+                    {
+                        object value = null;
+                        try
+                        {
+                            value = context.RoomTypes.Where(x => x.RoomTypeId == Convert.ToInt32(prop.GetValue(myObject, null))).FirstOrDefault().RoomTypeName;
+                        }
+                        catch
+                        {
+                            value = prop.GetValue(myObject, null);
+                        }
+
+                        items.Add(new Item() { Key = "RoomTypeName", Value = value });
+                    }
+                    //else if (propertyName == "LocationSizeId")
+                    //{
+                    //    object value = null;
+                    //    try
+                    //    {
+                    //        value = context.lo.Where(x => x.LocationSizeId == Convert.ToInt32(prop.GetValue(myObject, null))).FirstOrDefault().RoomTypeName;
+                    //    }
+                    //    catch
+                    //    {
+                    //        value = prop.GetValue(myObject, null);
+                    //    }
+
+                    //    items.Add(new Item() { Key = "RoomTypeName", Value = value });
+                    //}
                     else
                     {
                         items.Add(new Item() { Key = propertyName, Value = prop.GetValue(myObject, null) });
