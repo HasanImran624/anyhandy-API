@@ -66,7 +66,7 @@ namespace anyhandy_API.Controllers
             if (loginDetailsVM.IsValidUser)
             {
                 // Successful login
-                var tokenString = GenerateJSONWebToken(user);
+                var tokenString = GenerateJSONWebToken(user, loginDetailsVM.Id);
                 return Ok(new { Message = "Login successful!" , token = tokenString, username = loginDetailsVM.UserName});
             }
             else
@@ -76,7 +76,7 @@ namespace anyhandy_API.Controllers
             }
         }
 
-        private string GenerateJSONWebToken(UserDTO user)
+        private string GenerateJSONWebToken(UserDTO user, int userID)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfigrationManager.AppSettings["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -84,7 +84,8 @@ namespace anyhandy_API.Controllers
             var claims = new[] {
         new Claim(JwtRegisteredClaimNames.Sub, user.FullName),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        //new Claim("DateOfJoing", userInfo.DateOfJoing.ToString("yyyy-MM-dd")),
+        new Claim("userID", userID.ToString()),
+        //new Claim("DateOfJoing", user.DateOfJoing.ToString("yyyy-MM-dd")),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };
 
