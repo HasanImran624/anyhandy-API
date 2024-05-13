@@ -67,6 +67,7 @@ namespace Anyhandy.Services.Users
         {
             using var userContext = new AnyHandyDBContext<User>(); // Assuming your context is non-generic
             bool isValidCredentials = false;
+            int userID = 0;
             // Find a user with the provided email
             var userEntity = userContext.Users
                 .FirstOrDefault(u => u.Email == userDTO.Email);
@@ -83,14 +84,14 @@ namespace Anyhandy.Services.Users
                 {
                     isValidCredentials = (userEntity.Paswword == userDTO.Password && !(bool)userEntity.IsHandyman);
                 }
+                userID = userEntity.UserId;
                 // Compare the stored password with the provided password
-                
 
                 return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = userEntity.FirstName + " " + userEntity.LastName, UserId = userEntity.UserId, FirstName = userEntity.FirstName, LastName = userEntity.LastName };
             }
 
             // If no user with the provided email is found
-            return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = string.Empty }; ;
+            return new LoginDetailsVM { IsValidUser = isValidCredentials, UserName = string.Empty, UserId = userID }; ;
         }
 
 

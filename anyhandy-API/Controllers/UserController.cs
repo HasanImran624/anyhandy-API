@@ -67,9 +67,9 @@ namespace anyhandy_API.Controllers
 
             if (loginDetailsVM.IsValidUser)
             {
-                // Successful login
                 var tokenString = GenerateJSONWebToken(user, loginDetailsVM.UserId);
-                return Ok(new { Message = "Login successful!", token = tokenString, username = loginDetailsVM.UserName, UserId = loginDetailsVM.UserId, firstNmae = loginDetailsVM.FirstName, lastName = loginDetailsVM.LastName });
+                return Ok(new { Message = "Login successful!", token = tokenString, username = loginDetailsVM.UserName,
+                    UserId = loginDetailsVM.UserId, firstNmae = loginDetailsVM.FirstName, lastName = loginDetailsVM.LastName });
             }
             else
             {
@@ -87,7 +87,6 @@ namespace anyhandy_API.Controllers
         new Claim(JwtRegisteredClaimNames.Sub, user.FullName),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
          new Claim("UserId", UserId.ToString()),
-        //new Claim("DateOfJoing", userInfo.DateOfJoing.ToString("yyyy-MM-dd")),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };
 

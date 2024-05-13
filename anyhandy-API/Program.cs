@@ -1,5 +1,8 @@
+using Amazon;
+using Amazon.S3;
 using Anyhandy.Common;
 using Anyhandy.Interface.Dashboard;
+using Anyhandy.Interface;
 using Anyhandy.Interface.Packages;
 using Anyhandy.Interface.User;
 using Anyhandy.Services.Dashboard;
@@ -15,9 +18,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var accessKeyId = AppConfigrationManager.AppSettings["AWS:AccessKeyId"];
+var secretAccessKey = AppConfigrationManager.AppSettings["AWS:SecretAccessKey"];
+
+builder.Services
+    .AddSingleton<IAmazonS3>(p => {
+        var config = new AmazonS3Config
+        {
+            RegionEndpoint = RegionEndpoint.USEast1,
+        };
+        return new AmazonS3Client(accessKeyId, secretAccessKey, config);
+    });
+
+
+
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IDashboard, DashboardServices>();
 builder.Services.AddScoped<IPackage, PackagesService>();
+builder.Services.AddScoped<IJobPost, JobPostService>();
+builder.Services.AddScoped<ICountry, CountryService>();
+builder.Services.AddScoped<IFileStorage, S3FileStorageService>();
 builder.Services.AddAuthentication("Bearer")
    .AddJwtBearer(options =>
    {
@@ -51,7 +72,7 @@ var app = builder.Build();
 //}
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

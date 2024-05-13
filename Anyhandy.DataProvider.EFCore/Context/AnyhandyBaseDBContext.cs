@@ -17,6 +17,9 @@ namespace Anyhandy.DataProvider.EFCore.Context
             : base(options)
         {
         }
+
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<AreaType> AreaTypes { get; set; }
         public virtual DbSet<ContractMilestone> ContractMilestones { get; set; }
         public virtual DbSet<ContractMilestonesPayment> ContractMilestonesPayments { get; set; }
@@ -73,6 +76,37 @@ namespace Anyhandy.DataProvider.EFCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.ToTable("countries");
+
+                entity.Property(e => e.CountryId).HasColumnName("CountryID");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.ToTable("cities");
+
+                entity.HasIndex(e => e.CountryId, "CountryID");
+
+                entity.Property(e => e.CityId).HasColumnName("CityID");
+
+                entity.Property(e => e.CountryId).HasColumnName("CountryID");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.Cities)
+                    .HasForeignKey(d => d.CountryId)
+                    .HasConstraintName("cities_ibfk_1");
+            });
+
             modelBuilder.Entity<AreaType>(entity =>
             {
                 entity.ToTable("AreaType");
