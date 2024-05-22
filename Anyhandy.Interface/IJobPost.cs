@@ -10,6 +10,8 @@ namespace Anyhandy.Interface
 {
     public interface IJobPost
     {
-        public void submitJobPost(MainServiceDTO jobDTO, int userID);
+        public JobPostVM submitJobPost(MainServiceDTO jobDTO, int userID);
+        public bool IsJobPostExistsById(int id);
+        public void editJobPost(MainServiceDTO jobDTO, int userID, int jobId);
     }
 }

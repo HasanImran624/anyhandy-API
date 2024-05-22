@@ -1,10 +1,12 @@
 using Amazon;
 using Amazon.S3;
 using Anyhandy.Common;
+using Anyhandy.Interface;
 using Anyhandy.Interface.Dashboard;
 using Anyhandy.Interface;
 using Anyhandy.Interface.Packages;
 using Anyhandy.Interface.User;
+using Anyhandy.Services;
 using Anyhandy.Services.Dashboard;
 using Anyhandy.Services.Users;
 using Microsoft.IdentityModel.Tokens;
@@ -39,6 +41,7 @@ builder.Services.AddScoped<IPackage, PackagesService>();
 builder.Services.AddScoped<IJobPost, JobPostService>();
 builder.Services.AddScoped<ICountry, CountryService>();
 builder.Services.AddScoped<IFileStorage, S3FileStorageService>();
+builder.Services.AddScoped<IJobContract,JobContractService>();
 builder.Services.AddAuthentication("Bearer")
    .AddJwtBearer(options =>
    {

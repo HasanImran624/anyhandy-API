@@ -13,7 +13,6 @@ namespace Anyhandy.DataProvider.EFCore.Models
         }
 
         public int LandscapingServiceId { get; set; }
-        public string LandscapingService { get; set; }
         public int? JobId { get; set; }
         public int? SubServicesId { get; set; }
         public string MoreDetailsDescription { get; set; }

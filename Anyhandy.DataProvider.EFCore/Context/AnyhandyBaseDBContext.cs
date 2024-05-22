@@ -17,7 +17,7 @@ namespace Anyhandy.DataProvider.EFCore.Context
             : base(options)
         {
         }
-
+    
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<AreaType> AreaTypes { get; set; }
@@ -206,6 +206,9 @@ namespace Anyhandy.DataProvider.EFCore.Context
                 entity.Property(e => e.PostedDate).HasColumnType("date");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.StartRate).HasMaxLength(255);
+                entity.Property(e => e.EndRate).HasMaxLength(255);
 
                 entity.HasOne(d => d.JobAddress)
                     .WithMany(p => p.Jobs)
@@ -832,10 +835,6 @@ namespace Anyhandy.DataProvider.EFCore.Context
                 entity.Property(e => e.AreaSize).HasColumnType("decimal(10,2)");
 
                 entity.Property(e => e.JobId).HasColumnName("JobID");
-
-                entity.Property(e => e.LandscapingService)
-                    .IsRequired()
-                    .HasMaxLength(255);
 
                 entity.Property(e => e.SubServicesId).HasColumnName("SubServicesID");
 

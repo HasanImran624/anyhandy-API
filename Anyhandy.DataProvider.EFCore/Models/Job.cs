@@ -35,8 +35,11 @@ namespace Anyhandy.DataProvider.EFCore.Models
         public int? UserId { get; set; }
         public int? JobAddressId { get; set; }
         public DateTime? DueDate { get; set; }
-        public DateTime? JobDue { get; set; }
+        public DateTime? JobStart { get; set; }
+
         public DateTime? JobExpectedEnd { get; set; }
+        public string StartRate { get; set; }
+        public string EndRate { get; set; }
 
         public virtual UserAddress JobAddress { get; set; }
         public virtual MainService MainServices { get; set; }

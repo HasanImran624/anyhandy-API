@@ -87,8 +87,9 @@ namespace anyhandy_API.Controllers
         new Claim(JwtRegisteredClaimNames.Sub, user.FullName),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
          new Claim("UserId", UserId.ToString()),
+         new Claim(JwtRegisteredClaimNames.Aud, "web-api"),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+         };
 
             var token = new JwtSecurityToken(AppConfigrationManager.AppSettings["Jwt:Issuer"],
                 AppConfigrationManager.AppSettings["Jwt:Issuer"],
@@ -98,5 +99,61 @@ namespace anyhandy_API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        [HttpPost("validate-token")]
+        public IActionResult ValidateToken([FromHeader] string authorization)
+        {
+            if (string.IsNullOrEmpty(authorization))
+            {
+                return BadRequest("Authorization header missing");
+            }
+
+            if (!authorization.StartsWith("Bearer "))
+            {
+                return BadRequest("Invalid authorization header format");
+            }
+
+            var tokenString = authorization.Substring("Bearer ".Length);
+
+            try
+            {
+                var principal = ValidateTokenString(tokenString);
+                if (principal != null)
+                {
+                    // Token is valid, extract user information from claims
+                    var userId = principal.FindFirstValue("UserId");
+
+                    // You can potentially return additional information based on user claims
+                    return Ok(new { Message = "Token is valid", UserId = userId });
+                }
+                else
+                {
+                    return Unauthorized("Invalid token");
+                }
+            }
+            catch (SecurityTokenException e)
+            {
+                return Unauthorized(e.Message);
+            }
+        }
+
+        private ClaimsPrincipal ValidateTokenString(string tokenString)
+        {
+            var tokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfigrationManager.AppSettings["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidIssuer = AppConfigrationManager.AppSettings["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = AppConfigrationManager.AppSettings["Jwt:Audience"],
+                ValidateLifetime = true
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ValidateToken(tokenString, tokenValidationParameters, out SecurityToken validatedToken);
+            return securityToken;
+        }
+
     }
 }

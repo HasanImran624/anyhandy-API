@@ -170,7 +170,7 @@ namespace anyhandy_API.Controllers
 
 
         [HttpGet("GetContractSearchFilterWithSortBy")]
-        public IActionResult GetContractSearchFilterWithSortBy(int UserID, int PageNo, string SearchTxt, string OrderByType, string SortByColumn, int RecordsPerPage, int ActiveType)
+        public IActionResult GetContractSearchFilterWithSortBy(int UserID, int PageNo, string? SearchTxt, string OrderByType, string SortByColumn, int RecordsPerPage, int ActiveType)
         {
             try
             {
@@ -208,6 +208,25 @@ namespace anyhandy_API.Controllers
                 int recordsPerPage = 10;
 
                 var data = _dashboard.JobContractDetails(contractId);
+
+                return Ok(new { Message = "success", Data = data });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+
+        [HttpGet("GetProposalDetails")]
+        public IActionResult GetProposalDetails(int proposalId)
+        {
+            try
+            {
+                int totalPages = 0;
+                int recordsPerPage = 10;
+
+                var data = _dashboard.GetProposalDetails(proposalId);
 
                 return Ok(new { Message = "success", Data = data });
             }

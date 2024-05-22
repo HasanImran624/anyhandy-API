@@ -6,6 +6,7 @@ using Anyhandy.Models.DTOs;
 using Anyhandy.Models.Enums;
 using Anyhandy.Models.ResourcesModels;
 using Anyhandy.Models.ViewModels;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 
 
@@ -613,7 +614,7 @@ namespace Anyhandy.Services.Dashboard
             lst = lst.Skip((int)((PageNo - 1) * RecordsPerPage)).Take(RecordsPerPage).ToList();
 
 
-            res.Results = lst.Skip((int)((PageNo - 1) * RecordsPerPage)).Take(RecordsPerPage).Select(x => new JobContractsFilteredDto()
+            res.Results = lst.Select(x => new JobContractsFilteredDto()
             {
                 JobContractId = x.JobContractId,
                 ContractStatus = x.ConctracStatus,
@@ -660,8 +661,8 @@ namespace Anyhandy.Services.Dashboard
             res = (from j in userContext.Jobs
                    join jc in userContext.JobContracts on j.JobId equals jc.JobId
                    join u in userContext.Users on jc.SelectedHandyManId equals u.UserId
-                   join cm in userContext.ContractMilestones on jc.JobContractId equals cm.JobContractId into cmg
-                   from cm in cmg.DefaultIfEmpty()
+                   //join cm in userContext.ContractMilestones on jc.JobContractId equals cm.JobContractId into cmg
+                   //from cm in cmg.DefaultIfEmpty()
                    join cp in userContext.JobContractPayments on jc.JobContractId equals cp.JobContractId into cpg
                    from cp in cpg.DefaultIfEmpty()
                    join up in userContext.UserProfileServices on u.UserId equals up.UserId into gup
@@ -670,7 +671,7 @@ namespace Anyhandy.Services.Dashboard
                    from m in gm.DefaultIfEmpty()
 
                    where jc.JobContractId == contractId
-                   orderby cm.StartDate descending
+
                    select new JobContractDetails()
                    {
                        JobContractId = jc.JobContractId,
@@ -681,11 +682,11 @@ namespace Anyhandy.Services.Dashboard
                        Image = "",
                        JobId = j.JobId,
                        JobTitle = j.JobTitle,
-                       MileStoneAmount = cm == null ? 0 : cm.Amount,
-                       MileStoneDueDate = cm == null ? null : cm.EndDate,
-                       MileStoneStartDate = cm == null ? null : cm.StartDate,
-                       MileStoneStatus = cm == null ? "" : (cm.Status == null ? 0 : cm.Status).ToString(),
-                       MileStoneTitle = cm.Details,
+                       //MileStoneAmount = cm == null ? 0 : cm.Amount,
+                       //MileStoneDueDate = cm == null ? null : cm.EndDate,
+                       //MileStoneStartDate = cm == null ? null : cm.StartDate,
+                       //MileStoneStatus = cm == null ? "" : (cm.Status == null ? 0 : cm.Status).ToString(),
+                       //MileStoneTitle = cm.Details,
                        UserId = u.UserId,
                        UserName = u.FirstName.Trim() + " " + u.LastName.Trim() ?? string.Empty,
                        Service = m == null ? "" : m.ServiceNameEn ?? string.Empty,
@@ -703,6 +704,23 @@ namespace Anyhandy.Services.Dashboard
                 {
                     res.SubServiceList = GetSubServicesList(res.JobId, res.ServiceId);//userContext.SubServices.Where(x => x.MainServicesId == res.ServiceId).Select(s => s.ServiceNameEn).ToList();
                 }
+
+
+                var milestoneDetialsList = (from cm in userContext.ContractMilestones
+                                            join cmp in userContext.ContractMilestonesPayments on cm.MilestoneId equals cmp.MilestoneId into cmpg
+                                            from cmp in cmpg.DefaultIfEmpty()
+                                            where cm.JobContractId == contractId
+                                            select new MileStoneDetailsDto()
+                                            {
+                                                MilestoneId = cm.MilestoneId,
+                                                MileStoneAmount = cm.Amount,
+                                                MileStoneDueDate = cm.EndDate,
+                                                MileStoneTitle = cm.Details,
+                                                MileStoneStatus = cmp == null ? "Pay Now" : "Paid"
+                                            }
+                                            ).ToList();
+
+                res.MilestoneDetailsList = milestoneDetialsList;
             }
 
             return res;
@@ -842,6 +860,38 @@ namespace Anyhandy.Services.Dashboard
                     lst.Add(obj);
                 }
             }
+            else if (mainServiceId == 9)
+            {
+                List<TblApplianceRepairService> lstApplianceRepairService = userContext.TblApplianceRepairServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstApplianceRepairService)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = userContext.SubServices.Where(x => x.SubServicesId == service.SubServiceId).FirstOrDefault()?.ServiceNameEn;
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblApplianceRepairService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
+            else
+            {
+                List<TblGeneralService> lstGeneralService = userContext.TblGeneralServices.Where(x => x.JobId == jobId).ToList();
+                foreach (var service in lstGeneralService)
+                {
+                    SubServicesDto obj = new SubServicesDto();
+                    try
+                    {
+                        obj.SubSrviceName = "General Services";
+                    }
+                    catch { }
+
+                    obj.ListItemData = GetProperties<TblGeneralService>(service, userContext);
+                    lst.Add(obj);
+                }
+            }
 
 
             return lst;
@@ -852,7 +902,7 @@ namespace Anyhandy.Services.Dashboard
         private List<Item> GetProperties<T>(T myObject, AnyHandyDBContext<User> context)
         {
             List<Item> items = new List<Item>();
-            string[] arrExcludeColumns = new string[] { "JobId", "SubServiceId", "SubCategoryId", "CarpentryServiceId", "PlumbingServiceId", "HomeCleaningServiceId", "HvacServiceId", "ElectricalServiceId", "PaintingServiceId", "LandscapingServiceId", "PestControlServiceId", "SubServicesId" };
+            string[] arrExcludeColumns = new string[] { "JobId", "SubServiceId", "SubCategoryId", "CarpentryServiceId", "PlumbingServiceId", "HomeCleaningServiceId", "HvacServiceId", "ElectricalServiceId", "PaintingServiceId", "LandscapingServiceId", "PestControlServiceId", "SubServicesId", "ApplianceRepairServiceId", "GeneralServiceId" };
             Type myType = myObject.GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
 
@@ -942,8 +992,45 @@ namespace Anyhandy.Services.Dashboard
             return items;
         }
 
+        public JobProposalDetailsDto GetProposalDetails(int proposalId)
+        {
+            var res = new JobProposalDetailsDto();
 
+            using var userContext = new AnyHandyDBContext<User>();
 
+            res = (from j in userContext.Jobs
+                   join jp in userContext.JobProposals on j.JobId equals jp.JobId
+                   join u in userContext.Users on jp.UserId equals u.UserId
+                   join up in userContext.UserProfileServices on u.UserId equals up.UserId into gup
+                   from up in gup.DefaultIfEmpty()
+                   join m in userContext.MainServices on j.MainServicesId equals m.MainServicesId into gm
+                   from m in gm.DefaultIfEmpty()
 
+                   where jp.JobProposalId == proposalId
+                   select new JobProposalDetailsDto()
+                   {                       
+                       JobId = j.JobId,
+                       JobTitle = j.JobTitle,                     
+                       UserId = u.UserId,                      
+                       Service = m == null ? "" : m.ServiceNameEn ?? string.Empty,                       
+                       JobDetails = j.JobDetails,                       
+                       ContractorName = (u.FirstName.Trim() + " " + u.LastName.Trim()) ?? string.Empty,
+                       ServiceId = (m == null ? 0 : m.MainServicesId),
+                       Amount = jp.Amount,
+                       JobDueDate = j.DueDate,
+                       PorposalId = jp.JobProposalId
+
+                   }).FirstOrDefault();
+
+            if (res != null)
+            {               
+                if (res.ServiceId > 0)
+                {
+                    res.SubServiceList = GetSubServicesList(res.JobId, res.ServiceId);//userContext.SubServices.Where(x => x.MainServicesId == res.ServiceId).Select(s => s.ServiceNameEn).ToList();
+                }
+            }
+
+            return res;
+        }
     }
 }
