@@ -13,15 +13,11 @@ namespace Anyhandy.Models.DTOs
         public string JobTitle { get; set; }
         public string ContractName { get; set; }
         public string Image { get; set; }
-        public string MileStoneTitle { get; set; }
-        public DateTime? ContractDueDate { get; set; }
-        public string ContractStatus { get; set; }
-        public string MileStoneStatus { get; set; }
-        public DateTime? MileStoneStartDate { get; set; }
-        public DateTime? MileStoneDueDate { get; set; }
+
         public decimal? ContractAmount { get; set; }
         public decimal? ContractPaidAmount { get; set; }
-        public decimal? MileStoneAmount { get; set; }
+        public DateTime? ContractDueDate { get; set; }
+        public string ContractStatus { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Service { get; set; }
@@ -30,5 +26,17 @@ namespace Anyhandy.Models.DTOs
         public string JobDetails { get; set; }
         public decimal? BonusAmount { get; set; }
         public DateTime? ContractStartDate { get; set; }
+        public List<MileStoneDetailsDto> MilestoneDetailsList {get;set;}
+    }
+
+
+    public class MileStoneDetailsDto
+    {
+        public int MilestoneId { get; set; }
+        public string MileStoneStatus { get; set; }
+        public DateTime? MileStoneStartDate { get; set; }
+        public DateTime? MileStoneDueDate { get; set; }
+        public decimal? MileStoneAmount { get; set; }
+        public string MileStoneTitle { get; set; }
     }
 }

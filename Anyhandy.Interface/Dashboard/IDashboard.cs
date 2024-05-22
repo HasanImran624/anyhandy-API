@@ -28,5 +28,6 @@ namespace Anyhandy.Interface.Dashboard
         public string UpdateProposalStatus(int proposalId, string status);
 
         public JobContractDetails JobContractDetails(int contractId);
+        public JobProposalDetailsDto GetProposalDetails(int proposalId);
     }
 }
