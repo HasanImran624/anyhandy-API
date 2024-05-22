@@ -29,7 +29,7 @@ namespace Anyhandy.DataProvider.EFCore.Context
             entities.AddRange(objList);
             return SaveChanges();
         }
-
+    
         public virtual void Update(T currentobj, T modifiedobj)
         {
             Entry(currentobj).CurrentValues.SetValues(modifiedobj);

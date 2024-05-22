@@ -29,7 +29,7 @@ namespace anyhandy_API.Controllers
             _jobPost = jobPost;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("submit-job-post")]
         public async Task<IActionResult> SubmitJobPost(IFormCollection formdata)
@@ -66,12 +66,7 @@ namespace anyhandy_API.Controllers
                     }
                 }
             }
-
-            _jobPost.submitJobPost(jobDTO, 25);
-          
-
-
-            return Ok("Job post submitted successfully");
+            return Ok(_jobPost.submitJobPost(jobDTO, int.Parse(userID)));
         }
 
         private async Task<byte[]> ReadFileContentAsByteArray(IFormFile file)
@@ -82,6 +77,73 @@ namespace anyhandy_API.Controllers
                 return memoryStream.ToArray();
             }
         }
+
+
+        [Authorize]
+        [HttpPut]
+        [Route("edit-job-post/{id}")]
+        public async Task<IActionResult> EditJobPost(int id, IFormCollection formdata)
+        {
+            bool existingJobPost = _jobPost.IsJobPostExistsById(id);
+
+            if (!existingJobPost)
+            {
+                return NotFound("Job post not found"); // Handle non-existent job post
+            }
+
+            var userID = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+            var files = HttpContext.Request.Form.Files;
+            var value = formdata.TryGetValue("form_attributes", out var values) ? values.FirstOrDefault() : null;
+            MainServiceDTO jobDTO = JsonConvert.DeserializeObject<MainServiceDTO>(value);
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    var fileNameParts = Path.GetFileNameWithoutExtension(file.FileName).Split('_');
+
+                    if (fileNameParts.Length >= 2) //
+                    {
+                        var code = fileNameParts[0];
+                        var uuid = fileNameParts[1];
+                        var subService = jobDTO?.SubServices.FirstOrDefault(s => s.Code == code && s.uuid == uuid);
+
+                        if (subService != null)
+                        {
+                            // first add job and location
+                            var subServiceImage = new SubServiceImage
+                            {
+                                ContentType = file.ContentType,
+                                FileName = file.Name,
+
+                                Content = await ReadFileContentAsByteArray(file)
+                            };
+                            subService.Images.Add(subServiceImage);
+                        }
+                    }
+                }
+            }
+            _jobPost.editJobPost(jobDTO, int.Parse(userID), id);
+
+            return Ok("Job post updated successfully");
+        }
+
+        //// Helper methods to update sub-services, location, and job details (implementation details omitted)
+        //private void UpdateSubServices(List<SubService> subServices, IFormCollection formdata)
+        //{
+        //    // ... Logic to update sub-services based on form data
+        //}
+
+        //private void UpdateLocation(Location location, IFormCollection formdata)
+        //{
+        //    // ... Logic to update location based on form data
+        //}
+
+        //private void UpdateJobDetails(JobDetails jobDetails, IFormCollection formdata)
+        //{
+        //    // ... Logic to update job details based on form data
+        //}
+
+
 
 
     }

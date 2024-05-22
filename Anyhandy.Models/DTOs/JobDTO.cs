@@ -26,6 +26,7 @@ namespace Anyhandy.Models.DTOs
 
     public class SubService
     {
+        public bool IsNew { get; set; } = false;
         public List<SubServiceImage> Images { get; set; } = new List<SubServiceImage> { };
         public string? NumberItems { get; set; }
         public int? SizeArea { get; set; }
@@ -51,15 +52,20 @@ namespace Anyhandy.Models.DTOs
 
         public string? areaType { get; set; }
 
+        public int? subserviceID { get; set; }
+
     }
 
     public class Location
     {
         public string? City { get; set; }
+        public string? Country { get; set; }
         public string? AddressType { get; set; }
         public string? NumberAndBuildingName { get; set; }
         public string? Details { get; set; }
         public string? Area { get; set; }
+        public int? LocationId { get; set; }
+        public int? AddressId { get; set; }
     }
 
     public class JobDetails
@@ -72,6 +78,7 @@ namespace Anyhandy.Models.DTOs
         public string? EndRate { get; set; }
         public bool StartImmediatly { get; set; }
         public string? FixedPriceAmount { get; set; }
+        public int? JobId { get; set; }
 
     }
 
